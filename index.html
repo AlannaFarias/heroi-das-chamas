@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz: Onde está o Mingau?</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+
+        body {
+            background-color: #121214;
+            color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .card {
+            background-color: #1a1a1e;
+            border: 1px solid #2a2a30;
+            border-radius: 12px;
+            max-width: 500px;
+            width: 100%;
+            padding: 30px;
+        }
+
+        .tag {
+            color: #38bdf8;
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        h1 {
+            font-size: 1.4rem;
+            margin-bottom: 12px;
+        }
+
+        p.descricao {
+            color: #9ca3af;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            margin-bottom: 22px;
+        }
+
+        .opcoes {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .opcao-btn {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            background-color: #242429;
+            border: 1px solid #323238;
+            color: #f3f4f6;
+            padding: 13px 16px;
+            border-radius: 8px;
+            font-size: 0.92rem;
+            text-align: left;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .opcao-btn:hover {
+            background-color: #2e2e35;
+            border-color: #38bdf8;
+            transform: translateX(4px);
+        }
+
+        .letra {
+            background-color: #18181b;
+            border: 1px solid #3f3f46;
+            color: #38bdf8;
+            font-weight: bold;
+            width: 26px;
+            height: 26px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 5px;
+            margin-right: 12px;
+            flex-shrink: 0;
+        }
+
+        .tela {
+            display: none;
+        }
+
+        .tela.ativa {
+            display: block;
+        }
+
+        .vitoria {
+            text-align: center;
+        }
+
+        .vitoria h1 {
+            color: #4ade80;
+            margin-top: 10px;
+        }
+
+        .btn-reiniciar {
+            margin-top: 18px;
+            background-color: #38bdf8;
+            color: #0f172a;
+            border: none;
+            padding: 11px 22px;
+            border-radius: 7px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <main class="card">
+
+        <!-- RUA -->
+        <div id="rua" class="tela ativa">
+            <div class="tag">🐱 Resgate do Mingau</div>
+            <h1>Frente da Casa (Rua)</h1>
+            <p class="descricao">O gatinho Mingau fugiu para dentro de casa e escondeu-se! Estás no portão de entrada. Por onde começas a busca?</p>
+            <div class="opcoes">
+                <button class="opcao-btn" onclick="mudar('sala')"><span class="letra">a</span> Entrar pela porta principal</button>
+                <button class="opcao-btn" onclick="mudar('quarto-frente')"><span class="letra">b</span> Entrar pela janela do quarto da frente</button>
+            </div>
+        </div>
+
+        <!-- SALA -->
+        <div id="sala" class="tela">
+            <div class="tag">Local: Sala</div>
+            <h1>Sala de Estar</h1>
+            <p class="descricao">A sala está sossegada e não vês sinal do gato por aqui. Para onde vais a seguir?</p>
+            <div class="opcoes">
+                <button class="opcao-btn" onclick="mudar('corredor')"><span class="letra">a</span> Ir pelo corredor lateral</button>
+                <button class="opcao-btn" onclick="mudar('quarto-frente')"><span class="letra">b</span> Entrar no quarto da frente</button>
+                <button class="opcao-btn" onclick="mudar('rua')"><span class="letra">c</span> Sair de volta para a rua</button>
+            </div>
+        </div>
+
+        <!-- QUARTO DA FRENTE -->
+        <div id="quarto-frente" class="tela">
+            <div class="tag">Local: Quarto</div>
+            <h1>Quarto da Frente</h1>
+            <p class="descricao">Olhas debaixo da cama e atrás das cortinas, mas o quarto está vazio.</p>
+            <div class="opcoes">
+                <button class="opcao-btn" onclick="mudar('sala')"><span class="letra">a</span> Passar pela porta para a sala</button>
+                <button class="opcao-btn" onclick="mudar('rua')"><span class="letra">b</span> Sair pela janela para a rua</button>
+            </div>
+        </div>
+
+        <!-- CORREDOR -->
+        <div id="corredor" class="tela">
+            <div class="tag">Local: Corredor</div>
+            <h1>Corredor</h1>
+            <p class="descricao">Um corredor estreito que liga a sala à parte de trás da casa.</p>
+            <div class="opcoes">
+                <button class="opcao-btn" onclick="mudar('cozinha')"><span class="letra">a</span> Avançar até à cozinha</button>
+                <button class="opcao-btn" onclick="mudar('sala')"><span class="letra">b</span> Voltar para a sala</button>
+            </div>
+        </div>
+
+        <!-- COZINHA -->
+        <div id="cozinha" class="tela">
+            <div class="tag">Local: Cozinha</div>
+            <h1>Cozinha</h1>
+            <p class="descricao">Ouviste um miado baixinho vindo de uma das divisões ao lado!</p>
+            <div class="opcoes">
+                <button class="opcao-btn" onclick="mudar('quarto-x')"><span class="letra">a</span> Abrir a porta do quarto à esquerda</button>
+                <button class="opcao-btn" onclick="mudar('banheiro')"><span class="letra">b</span> Abrir a porta da casa de banho</button>
+                <button class="opcao-btn" onclick="mudar('corredor')"><span class="letra">c</span> Voltar pelo corredor</button>
+            </div>
+        </div>
+
+        <!-- BANHEIRO -->
+        <div id="banheiro" class="tela">
+            <div class="tag">Local: Casa de Banho</div>
+            <h1>Casa de Banho</h1>
+            <p class="descricao">Apenas toalhas e nada de pistas. O gato não está aqui.</p>
+            <div class="opcoes">
+                <button class="opcao-btn" onclick="mudar('cozinha')"><span class="letra">a</span> Voltar para a cozinha</button>
+            </div>
+        </div>
+
+        <!-- QUARTO OBJETIVO (X) -->
+        <div id="quarto-x" class="tela vitoria">
+            <div style="font-size: 2.2rem; margin-bottom: 10px;">🐾</div>
+            <h1>Encontraste o Mingau!</h1>
+            <p class="descricao">Ele estava enrolado a dormir em cima do guarda-fatos deste quarto[cite: 14]. Missão cumprida com sucesso[cite: 15]!</p>
+            <button class="btn-reiniciar" onclick="mudar('rua')">Jogar de Novo</button>
+        </div>
+
+    </main>
+
+    <script>
+        function mudar(telaId) {
+            document.querySelectorAll('.tela').forEach(t => t.classList.remove('ativa'));
+            document.getElementById(telaId).classList.add('ativa');
+        }
+    </script>
+
+</body>
+</html>
